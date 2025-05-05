@@ -1,0 +1,1 @@
+rootProject.name = "leaves-plugin-mixin-condition"
