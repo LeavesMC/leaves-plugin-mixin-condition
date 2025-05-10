@@ -1,11 +1,11 @@
-package test;
+package test.build;
 
 import org.junit.jupiter.api.Test;
-import org.leavesmc.plugin.mixin.condition.BuildInfo;
-import org.leavesmc.plugin.mixin.condition.BuildInfoManager;
+import org.leavesmc.plugin.mixin.condition.build.BuildInfo;
+import org.leavesmc.plugin.mixin.condition.build.BuildInfoManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.leavesmc.plugin.mixin.condition.MinecraftVersion.minecraftVersion;
+import static org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData.minecraftVersion;
 
 public class BuildInfoManagerTest {
     @Test

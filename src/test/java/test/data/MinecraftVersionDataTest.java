@@ -1,11 +1,11 @@
-package test;
+package test.data;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.leavesmc.plugin.mixin.condition.MinecraftVersion.minecraftVersion;
+import static org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData.minecraftVersion;
 
-public class MinecraftVersionTest {
+public class MinecraftVersionDataTest {
     @Test
     public void testConstructor1() {
         var mcVersion = minecraftVersion("1.21.5");

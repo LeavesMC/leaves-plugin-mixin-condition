@@ -1,4 +1,4 @@
-package org.leavesmc.plugin.mixin.condition;
+package org.leavesmc.plugin.mixin.condition.data;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -7,33 +7,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record MinecraftVersion(
+public record MinecraftVersionData(
     int major,
     int minor,
     int patch
-) implements Comparable<MinecraftVersion> {
+) implements Comparable<MinecraftVersionData> {
     @Contract("_ -> new")
-    public static @NotNull MinecraftVersion fromString(@NotNull String version) {
+    public static @NotNull MinecraftVersionData fromString(@NotNull String version) {
         List<Integer> split = Arrays.stream(version.split("\\."))
             .map(Integer::parseInt)
             .collect(Collectors.toList());
         switch (split.size()) {
             case 2: split.add(0);
-            case 3: return new MinecraftVersion(split.get(0), split.get(1), split.get(2));
+            case 3: return new MinecraftVersionData(split.get(0), split.get(1), split.get(2));
             default: throw new IllegalArgumentException("Invalid version: " + version);
         }
     }
 
-    public static @NotNull MinecraftVersion minecraftVersion(@NotNull String version) {
+    public static @NotNull MinecraftVersionData minecraftVersion(@NotNull String version) {
         return fromString(version);
     }
 
-    public static @NotNull MinecraftVersion minecraftVersion(int major, int minor, int patch) {
-        return new MinecraftVersion(major, minor, patch);
+    public static @NotNull MinecraftVersionData minecraftVersion(int major, int minor, int patch) {
+        return new MinecraftVersionData(major, minor, patch);
     }
 
     @Override
-    public int compareTo(@NotNull MinecraftVersion other) {
+    public int compareTo(@NotNull MinecraftVersionData other) {
         int c1 = Integer.compare(this.major, other.major);
         if (c1 != 0) return c1;
         int c2 = Integer.compare(this.minor, other.minor);
@@ -41,23 +41,23 @@ public record MinecraftVersion(
         return Integer.compare(this.patch, other.patch);
     }
 
-    public boolean isGreaterThan(MinecraftVersion other) {
+    public boolean isGreaterThan(MinecraftVersionData other) {
         return this.compareTo(other) > 0;
     }
 
-    public boolean isGreaterThanOrEqualTo(MinecraftVersion other) {
+    public boolean isGreaterThanOrEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) >= 0;
     }
 
-    public boolean isLessThan(MinecraftVersion other) {
+    public boolean isLessThan(MinecraftVersionData other) {
         return this.compareTo(other) < 0;
     }
 
-    public boolean isLessThanOrEqualTo(MinecraftVersion other) {
+    public boolean isLessThanOrEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) <= 0;
     }
 
-    public boolean isEqualTo(MinecraftVersion other) {
+    public boolean isEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) == 0;
     }
 }

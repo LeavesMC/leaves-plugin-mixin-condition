@@ -1,13 +1,12 @@
-package org.leavesmc.plugin.mixin.condition;
+package org.leavesmc.plugin.mixin.condition.build;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
-import static org.leavesmc.plugin.mixin.condition.MinecraftVersion.minecraftVersion;
+import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
 
 public record BuildInfo(
     String projectName,
-    MinecraftVersion mcVersion,
+    MinecraftVersionData minecraftVersion,
     int buildNumber
 ) {
     @Contract("_ -> new")
@@ -18,7 +17,7 @@ public record BuildInfo(
         }
         return new BuildInfo(
             split[0],
-            minecraftVersion(split[1]),
+            MinecraftVersionData.minecraftVersion(split[1]),
             Integer.parseInt(split[2])
         );
     }

@@ -1,4 +1,4 @@
-package org.leavesmc.plugin.mixin.condition;
+package org.leavesmc.plugin.mixin.condition.build;
 
 public class BuildInfoManager {
     public static final BuildInfoManager INSTANCE = new BuildInfoManager();
