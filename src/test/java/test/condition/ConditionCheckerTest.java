@@ -1,11 +1,12 @@
-package test;
+package test.condition;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 import org.leavesmc.plugin.mixin.condition.annotations.Condition;
 import org.leavesmc.plugin.mixin.condition.annotations.MinecraftVersion;
+import org.leavesmc.plugin.mixin.condition.condition.ConditionChecker;
 import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
-import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -65,5 +66,14 @@ public class ConditionCheckerTest {
         assertThrows(RuntimeException.class, () -> shouldApplyMixin(TestMixin3.class.getName()));
         assertThrows(RuntimeException.class, () -> shouldApplyMixin("aaa.bbb"));
         assertThrows(IllegalArgumentException.class, () -> shouldApplyMixin(TestMixin4.class.getName()));
+    }
+
+    @Test
+    public void testSetClassLoader() {
+        assertDoesNotThrow(this::testShouldApplyMixin);
+        ConditionChecker.setClassLoader(ClassLoader.getPlatformClassLoader());
+        assertThrows(RuntimeException.class, this::testShouldApplyMixin);
+        ConditionChecker.setClassLoader(this.getClass().getClassLoader());
+        assertDoesNotThrow(this::testShouldApplyMixin);
     }
 }

@@ -1,4 +1,4 @@
-package test;
+package test.condition;
 
 import org.junit.jupiter.api.Test;
 import org.leavesmc.plugin.mixin.condition.condition.ComparableCondition;

@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConditionChecker {
+    private static ClassLoader loader = ConditionChecker.class.getClassLoader();
+
     public static boolean shouldApplyMixin(String mixinClassName) {
         Class<?> mixinClass = getClass(mixinClassName);
         List<Annotation> annotations = Arrays.stream(mixinClass.getAnnotations())
@@ -21,9 +23,13 @@ public class ConditionChecker {
         return checkCondition(annotations.getFirst());
     }
 
+    public static void setClassLoader(ClassLoader loader) {
+        ConditionChecker.loader = loader;
+    }
+
     private static @NotNull Class<?> getClass(String className) {
         try {
-            return Class.forName(className);
+            return Class.forName(className, true, loader);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
