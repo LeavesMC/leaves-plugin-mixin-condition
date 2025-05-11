@@ -2,21 +2,19 @@ package test;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.leavesmc.plugin.mixin.condition.ConditionChecker;
-import org.leavesmc.plugin.mixin.condition.annotation.Condition;
-import org.leavesmc.plugin.mixin.condition.annotation.conditions.MinecraftVersion;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfo;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfoManager;
+import org.leavesmc.plugin.mixin.condition.annotations.Condition;
+import org.leavesmc.plugin.mixin.condition.annotations.MinecraftVersion;
+import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
+import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.leavesmc.plugin.mixin.condition.condition.ConditionChecker.shouldApplyMixin;
 import static org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData.minecraftVersion;
 
 public class ConditionCheckerTest {
-    private static final ConditionChecker checker = new ConditionChecker();
-
     @Retention(RetentionPolicy.RUNTIME)
     @interface TestAnnotation1 {
     }
@@ -52,20 +50,20 @@ public class ConditionCheckerTest {
     @BeforeAll
     static void setup() {
         BuildInfo buildInfo = new BuildInfo("leaves", minecraftVersion("1.21.4"), 114514);
-        BuildInfoManager.INSTANCE.setBuildInfo(buildInfo);
+        BuildInfoProvider.INSTANCE.setBuildInfo(buildInfo);
     }
 
     @Test
     public void testShouldApplyMixin() {
-        assertTrue(checker.shouldApplyMixin(TestMixin1.class.getName()));
-        assertFalse(checker.shouldApplyMixin(TestMixin2.class.getName()));
-        assertTrue(checker.shouldApplyMixin(TestMixin5.class.getName()));
+        assertTrue(shouldApplyMixin(TestMixin1.class.getName()));
+        assertFalse(shouldApplyMixin(TestMixin2.class.getName()));
+        assertTrue(shouldApplyMixin(TestMixin5.class.getName()));
     }
 
     @Test
     public void testShouldApplyThrow() {
-        assertThrows(RuntimeException.class, () -> checker.shouldApplyMixin(TestMixin3.class.getName()));
-        assertThrows(RuntimeException.class, () -> checker.shouldApplyMixin("aaa.bbb"));
-        assertThrows(IllegalArgumentException.class, () -> checker.shouldApplyMixin(TestMixin4.class.getName()));
+        assertThrows(RuntimeException.class, () -> shouldApplyMixin(TestMixin3.class.getName()));
+        assertThrows(RuntimeException.class, () -> shouldApplyMixin("aaa.bbb"));
+        assertThrows(IllegalArgumentException.class, () -> shouldApplyMixin(TestMixin4.class.getName()));
     }
 }

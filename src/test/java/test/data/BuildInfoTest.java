@@ -1,7 +1,7 @@
-package test.build;
+package test.data;
 
 import org.junit.jupiter.api.Test;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfo;
+import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

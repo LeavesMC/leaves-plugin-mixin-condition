@@ -1,4 +1,4 @@
-package org.leavesmc.plugin.mixin.condition.annotation;
+package org.leavesmc.plugin.mixin.condition;
 
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Type;
@@ -16,9 +16,8 @@ public class AnnotationCleaner {
     private final List<Class<? extends Annotation>> annotationClasses;
     private final Map<Class<? extends Annotation>, AnnotationNode> previousRestrictionAnnotations = new HashMap<>();
 
-    @SafeVarargs
-    public AnnotationCleaner(Class<? extends Annotation>... annotationClasses) {
-        this.annotationClasses = Arrays.asList(annotationClasses);
+    public AnnotationCleaner(List<Class<? extends Annotation>> annotationClasses) {
+        this.annotationClasses = annotationClasses;
     }
 
     public void onPreApply(ClassNode targetClass) {

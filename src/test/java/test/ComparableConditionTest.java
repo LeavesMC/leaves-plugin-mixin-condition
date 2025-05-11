@@ -1,7 +1,7 @@
 package test;
 
 import org.junit.jupiter.api.Test;
-import org.leavesmc.plugin.mixin.condition.ComparableCondition;
+import org.leavesmc.plugin.mixin.condition.condition.ComparableCondition;
 import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
 
 import static org.junit.jupiter.api.Assertions.*;

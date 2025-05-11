@@ -1,4 +1,4 @@
-package org.leavesmc.plugin.mixin.condition.annotation;
+package org.leavesmc.plugin.mixin.condition.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

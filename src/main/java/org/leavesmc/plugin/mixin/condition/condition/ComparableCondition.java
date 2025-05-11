@@ -1,4 +1,4 @@
-package org.leavesmc.plugin.mixin.condition;
+package org.leavesmc.plugin.mixin.condition.condition;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

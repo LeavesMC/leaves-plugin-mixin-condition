@@ -1,13 +1,13 @@
-package test.annotation.conditions;
+package test.annotations;
 
 import org.junit.jupiter.api.Test;
-import org.leavesmc.plugin.mixin.condition.ConditionChecker;
-import org.leavesmc.plugin.mixin.condition.annotation.conditions.ServerBuild;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfo;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfoManager;
+import org.leavesmc.plugin.mixin.condition.annotations.ServerBuild;
+import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
+import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.leavesmc.plugin.mixin.condition.condition.ConditionChecker.shouldApplyMixin;
 import static org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData.minecraftVersion;
 
 public class ServerBuildTest {
@@ -21,10 +21,9 @@ public class ServerBuildTest {
 
     @Test
     public void testShouldApplyMixin() {
-        ConditionChecker checker = new ConditionChecker();
         BuildInfo buildInfo = new BuildInfo("leaves", minecraftVersion("1.21.4"), 1919810);
-        BuildInfoManager.INSTANCE.setBuildInfo(buildInfo);
-        assertTrue(checker.shouldApplyMixin(TestMixin1.class.getName()));
-        assertFalse(checker.shouldApplyMixin(TestMixin2.class.getName()));
+        BuildInfoProvider.INSTANCE.setBuildInfo(buildInfo);
+        assertTrue(shouldApplyMixin(TestMixin1.class.getName()));
+        assertFalse(shouldApplyMixin(TestMixin2.class.getName()));
     }
 }

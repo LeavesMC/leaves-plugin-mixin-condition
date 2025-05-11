@@ -1,8 +1,7 @@
-package org.leavesmc.plugin.mixin.condition.build;
+package org.leavesmc.plugin.mixin.condition.data;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
 
 public record BuildInfo(
     String projectName,

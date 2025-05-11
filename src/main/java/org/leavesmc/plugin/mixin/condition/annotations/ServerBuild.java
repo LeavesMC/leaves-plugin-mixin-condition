@@ -1,17 +1,19 @@
-package org.leavesmc.plugin.mixin.condition.annotation.conditions;
+package org.leavesmc.plugin.mixin.condition.annotations;
 
 import org.jetbrains.annotations.NotNull;
-import org.leavesmc.plugin.mixin.condition.ComparableCondition;
-import org.leavesmc.plugin.mixin.condition.annotation.Condition;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfo;
-import org.leavesmc.plugin.mixin.condition.build.BuildInfoManager;
+import org.leavesmc.plugin.mixin.condition.condition.ComparableCondition;
+import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
+import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 import static org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData.minecraftVersion;
 
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Condition(ServerBuild.Checker.class)
 public @interface ServerBuild {
@@ -19,7 +21,7 @@ public @interface ServerBuild {
     String build();
 
     class Checker {
-        private static final BuildInfo current = BuildInfoManager.INSTANCE.getBuildInfo();
+        private static final BuildInfo current = BuildInfoProvider.INSTANCE.getBuildInfo();
 
         @SuppressWarnings("unused")
         boolean check(@NotNull ServerBuild value) {
