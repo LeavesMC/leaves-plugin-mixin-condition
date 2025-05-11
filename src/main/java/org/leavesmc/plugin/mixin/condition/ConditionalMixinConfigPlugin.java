@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,11 +22,11 @@ public abstract class ConditionalMixinConfigPlugin implements IMixinConfigPlugin
     }
 
     protected final @NotNull List<Class<? extends Annotation>> getAnnotations() {
-        List<Class<? extends Annotation>> result = getExtraAnnotations();
-        result.addAll(List.of(
+        List<Class<? extends Annotation>> result = new ArrayList<>(List.of(
             MinecraftVersion.class,
             ServerBuild.class
         ));
+        result.addAll(getExtraAnnotations());
         return result;
     }
 
