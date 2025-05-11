@@ -7,7 +7,10 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.util.Annotations;
 
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 // 这里的实现思路是模仿的 https://github.com/Fallen-Breath/conditional-mixin/blob/master/common/src/main/java/me/fallenbreath/conditionalmixin/impl/AnnotationCleanerImpl.java
@@ -43,7 +46,6 @@ public class AnnotationCleaner {
         String descriptor = Type.getDescriptor(annotationClass);
 
         int index = findAnnotationIndex(annotations, descriptor);
-        if (index == -1) return;
 
         AnnotationNode previous = previousRestrictionAnnotations.get(annotationClass);
         updateAnnotation(annotations, index, previous);
@@ -57,10 +59,14 @@ public class AnnotationCleaner {
     }
 
     private void updateAnnotation(@NotNull List<AnnotationNode> annotations, int index, AnnotationNode previous) {
-        if (previous == null) {
-            annotations.remove(index);
-        } else {
-            annotations.set(index, previous);
+        if (index != -1) {
+            if (previous == null) {
+                annotations.remove(index);
+            } else {
+                annotations.set(index, previous);
+            }
+        } else if (previous != null) {
+            annotations.add(previous);
         }
     }
 }
