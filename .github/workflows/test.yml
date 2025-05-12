@@ -16,7 +16,7 @@ jobs:
           java-version: 21
           distribution: 'temurin'
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v4
       - name: Execute Gradle build
         run: ./gradlew -Dorg.gradle.parallel=true test --no-daemon --stacktrace
       - name: Execute Gradle build
