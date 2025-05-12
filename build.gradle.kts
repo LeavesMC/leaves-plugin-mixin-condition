@@ -1,4 +1,3 @@
-
 plugins {
     java
     `maven-publish`
@@ -32,6 +31,13 @@ dependencies {
     testImplementation("org.jetbrains:annotations:$jbAnnotationVersion")
 }
 
+val sourceJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
+val isSnapshot = project.version.toString().endsWith("-SNAPSHOT")
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -39,6 +45,62 @@ publishing {
             artifactId = project.name
             version = project.version.toString()
             from(components["java"])
+            artifact(sourceJar)
+            withoutBuildIdentifier()
+
+            pom {
+                val repoPath = "LeavesMC/leaves-plugin-mixin-condition"
+                val repoUrl = "https://github.com/$repoPath"
+
+                name.set("leaves-plugin-mixin-condition")
+                description.set(project.description)
+                url.set(repoUrl)
+                packaging = "jar"
+
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("$repoUrl/blob/master/LICENSE")
+                        distribution.set("repo")
+                    }
+                }
+
+                issueManagement {
+                    system.set("GitHub")
+                    url.set("$repoUrl/issues")
+                }
+
+                developers {
+                    developer {
+                        id.set("MC_XiaoHei")
+                        name.set("MC_XiaoHei")
+                        email.set("xor7xiaohei@gmail.com")
+                        url.set("https://github.com/MC_XiaoHei")
+                    }
+                }
+
+                scm {
+                    url.set(repoUrl)
+                    connection.set("scm:git:$repoUrl.git")
+                    developerConnection.set("scm:git:git@github.com:$repoPath.git")
+                }
+            }
+        }
+
+        repositories {
+            val url = if (isSnapshot) {
+                "https://repo.leavesmc.org/snapshots"
+            } else {
+                "https://repo.leavesmc.org/releases"
+            }
+
+            maven(url) {
+                name = "leaves"
+                credentials(PasswordCredentials::class) {
+                    username = System.getenv("LEAVES_USERNAME")
+                    password = System.getenv("LEAVES_PASSWORD")
+                }
+            }
         }
     }
 }
