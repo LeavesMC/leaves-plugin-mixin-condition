@@ -41,11 +41,9 @@ public class TemplateMixinConfigPlugin extends ConditionalMixinConfigPlugin {
 
 同时你需要在 Mixin 配置 Json 中添加此插件：
 
-```json
+```json lines
 {
-    ...
     "plugin": "your-package.TemplateMixinConfigPlugin",
-    ...
 }
 ```
 
