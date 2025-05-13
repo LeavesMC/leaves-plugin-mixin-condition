@@ -2,7 +2,7 @@ package org.leavesmc.plugin.mixin.condition.annotations;
 
 import org.jetbrains.annotations.NotNull;
 import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
-import org.leavesmc.plugin.mixin.condition.condition.ComparableCondition;
+import org.leavesmc.plugin.mixin.condition.condition.ComparableExpression;
 import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
 
 import java.lang.annotation.ElementType;
@@ -21,7 +21,7 @@ public @interface MinecraftVersion {
 
         @SuppressWarnings("unused")
         boolean check(@NotNull MinecraftVersion value) {
-            ComparableCondition<MinecraftVersionData> condition = ComparableCondition.parse(
+            ComparableExpression<MinecraftVersionData> condition = ComparableExpression.parse(
                 value.value(),
                 MinecraftVersionData::fromString
             );

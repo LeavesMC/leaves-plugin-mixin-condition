@@ -6,10 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class ComparableCondition<T extends Comparable<T>> {
+public class ComparableExpression<T extends Comparable<T>> {
     private final Predicate<T> pred;
 
-    private ComparableCondition(Predicate<T> pred) {
+    private ComparableExpression(Predicate<T> pred) {
         this.pred = pred;
     }
 
@@ -17,9 +17,9 @@ public class ComparableCondition<T extends Comparable<T>> {
         return pred.test(target);
     }
 
-    public static <T extends Comparable<T>> ComparableCondition<T> parse(String input, Function<String, T> parser) {
+    public static <T extends Comparable<T>> ComparableExpression<T> parse(String input, Function<String, T> parser) {
         Parser<T> p = new Parser<>(input, parser);
-        ComparableCondition<T> result = p.parse();
+        ComparableExpression<T> result = p.parse();
         if (p.pos != p.expr.length()) {
             throw new IllegalArgumentException("Uncompleted condition" + p.expr.substring(p.pos) + "'");
         }
@@ -37,55 +37,55 @@ public class ComparableCondition<T extends Comparable<T>> {
             this.parser = parser;
         }
 
-        ComparableCondition<T> parse() {
+        ComparableExpression<T> parse() {
             return parseOr();
         }
 
-        private ComparableCondition<T> parseOr() {
-            ComparableCondition<T> left = parseAnd();
+        private ComparableExpression<T> parseOr() {
+            ComparableExpression<T> left = parseAnd();
             while (match("||")) {
-                ComparableCondition<T> right = parseAnd();
-                left = new ComparableCondition<>(left.pred.or(right.pred));
+                ComparableExpression<T> right = parseAnd();
+                left = new ComparableExpression<>(left.pred.or(right.pred));
             }
             return left;
         }
 
-        private ComparableCondition<T> parseAnd() {
-            ComparableCondition<T> left = parseNot();
+        private ComparableExpression<T> parseAnd() {
+            ComparableExpression<T> left = parseNot();
             while (match("&&")) {
-                ComparableCondition<T> right = parseNot();
-                left = new ComparableCondition<>(left.pred.and(right.pred));
+                ComparableExpression<T> right = parseNot();
+                left = new ComparableExpression<>(left.pred.and(right.pred));
             }
             return left;
         }
 
-        private ComparableCondition<T> parseNot() {
+        private ComparableExpression<T> parseNot() {
             if (match("!")) {
-                ComparableCondition<T> c = parseNot();
-                return new ComparableCondition<>(c.pred.negate());
+                ComparableExpression<T> c = parseNot();
+                return new ComparableExpression<>(c.pred.negate());
             }
             return parseAtom();
         }
 
-        private ComparableCondition<T> parseAtom() {
+        private ComparableExpression<T> parseAtom() {
             if (match("(")) {
-                ComparableCondition<T> c = parse();
+                ComparableExpression<T> c = parse();
                 if (!match(")")) throw new IllegalArgumentException("Missing `)`");
                 return c;
             }
             String token = parseToken();
 
             if (token.startsWith(">="))
-                return new ComparableCondition<>(v -> v.compareTo(parser.apply(token.substring(2))) >= 0);
+                return new ComparableExpression<>(v -> v.compareTo(parser.apply(token.substring(2))) >= 0);
             if (token.startsWith("<="))
-                return new ComparableCondition<>(v -> v.compareTo(parser.apply(token.substring(2))) <= 0);
+                return new ComparableExpression<>(v -> v.compareTo(parser.apply(token.substring(2))) <= 0);
             if (token.startsWith(">"))
-                return new ComparableCondition<>(v -> v.compareTo(parser.apply(token.substring(1))) > 0);
+                return new ComparableExpression<>(v -> v.compareTo(parser.apply(token.substring(1))) > 0);
             if (token.startsWith("<"))
-                return new ComparableCondition<>(v -> v.compareTo(parser.apply(token.substring(1))) < 0);
+                return new ComparableExpression<>(v -> v.compareTo(parser.apply(token.substring(1))) < 0);
             if (token.matches("[^=><!(),]+")) {
                 T value = parser.apply(token);
-                return new ComparableCondition<>(v -> v.compareTo(value) == 0);
+                return new ComparableExpression<>(v -> v.compareTo(value) == 0);
             }
 
             throw new IllegalArgumentException("Unsupported Condition: " + token);

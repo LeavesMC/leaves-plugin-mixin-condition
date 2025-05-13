@@ -73,6 +73,8 @@ public class MinecraftVersionDataTest {
         assertFalse(high.isLessThanOrEqualTo(low));
         assertFalse(low.isGreaterThan(high));
         assertFalse(low.isGreaterThanOrEqualTo(high));
+        assertTrue(high.isGreaterThan("1.21.5"));
+        assertTrue(low.isLessThan("2.1"));
     }
 
     @Test
@@ -83,5 +85,8 @@ public class MinecraftVersionDataTest {
         assertTrue(v1.isEqualTo(v2));
         assertTrue(v2.isGreaterThanOrEqualTo(v1));
         assertTrue(v1.isGreaterThanOrEqualTo(v2));
+        assertTrue(v1.isEqualTo("1.21"));
+        assertTrue(v2.isGreaterThanOrEqualTo("1.21"));
+        assertTrue(v2.isLessThanOrEqualTo("1.21"));
     }
 }

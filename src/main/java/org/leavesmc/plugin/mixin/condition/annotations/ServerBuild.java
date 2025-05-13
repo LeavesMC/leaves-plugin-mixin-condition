@@ -1,7 +1,7 @@
 package org.leavesmc.plugin.mixin.condition.annotations;
 
 import org.jetbrains.annotations.NotNull;
-import org.leavesmc.plugin.mixin.condition.condition.ComparableCondition;
+import org.leavesmc.plugin.mixin.condition.condition.ComparableExpression;
 import org.leavesmc.plugin.mixin.condition.data.BuildInfo;
 import org.leavesmc.plugin.mixin.condition.BuildInfoProvider;
 import org.leavesmc.plugin.mixin.condition.data.MinecraftVersionData;
@@ -27,7 +27,7 @@ public @interface ServerBuild {
         boolean check(@NotNull ServerBuild value) {
             MinecraftVersionData target = minecraftVersion(value.minecraft());
             if (!target.isEqualTo(current.minecraftVersion())) return false;
-            ComparableCondition<Integer> buildCondition = ComparableCondition.parse(
+            ComparableExpression<Integer> buildCondition = ComparableExpression.parse(
                 value.build(),
                 Integer::parseInt
             );

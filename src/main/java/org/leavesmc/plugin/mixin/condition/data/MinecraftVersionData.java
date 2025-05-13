@@ -45,19 +45,39 @@ public record MinecraftVersionData(
         return this.compareTo(other) > 0;
     }
 
+    public boolean isGreaterThan(String other) {
+        return this.isGreaterThan(minecraftVersion(other));
+    }
+
     public boolean isGreaterThanOrEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) >= 0;
+    }
+
+    public boolean isGreaterThanOrEqualTo(String other) {
+        return this.isGreaterThanOrEqualTo(minecraftVersion(other));
     }
 
     public boolean isLessThan(MinecraftVersionData other) {
         return this.compareTo(other) < 0;
     }
 
+    public boolean isLessThan(String other) {
+        return this.isLessThan(minecraftVersion(other));
+    }
+
     public boolean isLessThanOrEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) <= 0;
     }
 
+    public boolean isLessThanOrEqualTo(String other) {
+        return this.isLessThanOrEqualTo(minecraftVersion(other));
+    }
+
     public boolean isEqualTo(MinecraftVersionData other) {
         return this.compareTo(other) == 0;
+    }
+
+    public boolean isEqualTo(String other) {
+        return this.isEqualTo(minecraftVersion(other));
     }
 }
