@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.leavesmc:leaves-plugin-template:1.0-SNAPSHOT")
+    compileOnly("org.leavesmc:leaves-plugin-mixin-condition:1.0.0")
 }
 ```
 
