@@ -15,8 +15,14 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Print all environment variable names
-        run: printenv | cut -d= -f1
+      - name: Print all env var names in batches
+        run: |
+          total=$(env | cut -d= -f1 | wc -l)
+          batch=50
+          for ((i=1; i<=$total; i+=batch)); do
+            echo "--- Batch $((i/batch+1)) ---"
+            env | cut -d= -f1 | sed -n "${i},$((i+batch-1))p"
+          done
       - name: Deploy
         run: ./gradlew -Dorg.gradle.parallel=true publish --no-daemon --stacktrace
         env:
