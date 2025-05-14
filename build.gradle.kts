@@ -108,3 +108,9 @@ publishing {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register("printVersion") {
+    doFirst {
+        println(version)
+    }
+}
