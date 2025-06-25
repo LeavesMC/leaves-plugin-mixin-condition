@@ -22,6 +22,8 @@ dependencies {
     }
     compileOnly("org.ow2.asm:asm-tree:$asmVersion")
     compileOnly("org.jetbrains:annotations:$jbAnnotationVersion")
+    implementation("io.leangen.geantyref:geantyref:2.0.0")
+    testImplementation("io.leangen.geantyref:geantyref:2.0.0")
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("net.fabricmc:sponge-mixin:$mixinVersion") {
