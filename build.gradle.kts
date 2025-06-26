@@ -4,12 +4,13 @@ plugins {
 }
 
 group = "org.leavesmc"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 val asmVersion = "9.8"
 val jbAnnotationVersion = "26.0.2"
 val mixinVersion = "0.15.5+mixin.0.8.7"
 val junitVersion = "5.10.0"
+val geantyrefVersion = "2.0.0"
 
 repositories {
     mavenCentral()
@@ -22,8 +23,8 @@ dependencies {
     }
     compileOnly("org.ow2.asm:asm-tree:$asmVersion")
     compileOnly("org.jetbrains:annotations:$jbAnnotationVersion")
-    implementation("io.leangen.geantyref:geantyref:2.0.0")
-    testImplementation("io.leangen.geantyref:geantyref:2.0.0")
+    implementation("io.leangen.geantyref:geantyref:$geantyrefVersion")
+    testImplementation("io.leangen.geantyref:geantyref:$geantyrefVersion")
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("net.fabricmc:sponge-mixin:$mixinVersion") {
